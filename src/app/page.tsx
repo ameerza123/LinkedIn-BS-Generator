@@ -34,12 +34,20 @@ export default function Home() {
       className="min-h-screen p-6 max-w-2xl mx-auto"
       style={{ backgroundColor: 'rgb(244, 242, 238)' }}
     >
+      {/* Logo image */}
+      <img
+        src="bs_logo.png"
+        alt="BS Logo"
+        className="mx-auto mb-4"
+        style={{ width: 80, height: 80 }}
+      />
+
       {/* Title text */}
       <h1
         className="text-3xl font-bold mb-4 text-center"
         style={{ color: 'rgb(10, 102, 194)' }}
       >
-        LinkedIn Parody Post Generator
+        LinkedIn Post Generator
       </h1>
 
       {/* User input box */}
