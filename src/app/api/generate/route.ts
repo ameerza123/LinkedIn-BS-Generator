@@ -6,7 +6,11 @@ const genAI = new GoogleGenAI({
 });
 
 export async function POST(req: NextRequest) {
-  const { userInput } = await req.json();
+  const { userInput, length } = await req.json();
+
+  let charLimit = 1000;
+  if (length === 500) charLimit = 500;
+  else if (length === 2500) charLimit = 2500;
 
   const prompt = `
 You are an aspiring LinkedIn influencer who has just done the following task: "${userInput}".
@@ -24,7 +28,7 @@ Constraints:
 - Do NOT use markdown (no **bold**, *, etc.)
 - Do NOT mention that you are an AI
 - Do NOT mention that this is an AI generated response
-- Keep the total output under 1500 characters.
+- Keep the total output under ${charLimit} characters.
 `;
 
   const result = await genAI.models.generateContent({

@@ -6,6 +6,7 @@ export default function Home() {
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [loading, setLoading] = useState(false);
+  const [length, setLength] = useState(1000); // default to medium
 
   const handleGenerate = async () => {
     setLoading(true);
@@ -13,7 +14,7 @@ export default function Home() {
     const res = await fetch('/api/generate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userInput: input }),
+      body: JSON.stringify({ userInput: input, length }),
     });
     const data = await res.json();
     setOutput(data.output);
@@ -49,6 +50,31 @@ export default function Home() {
           boxShadow: '0 2px 8px rgba(0,0,0,0.07)',
         }}
       />
+
+      <div className="mb-4 flex flex-col items-start">
+        <div className="w-28 flex flex-col items-center">
+          <label className="block mb-1 font-semibold text-gray-700 text-sm text-center w-full">
+            Post Length
+          </label>
+          <input
+            type="range"
+            min={0}
+            max={2}
+            step={1}
+            value={
+              length === 500 ? 0 :
+              length === 1000 ? 1 : 2
+            }
+            onChange={e => {
+              const val = Number(e.target.value);
+              setLength(val === 0 ? 500 : val === 1 ? 1000 : 2500);
+            }}
+            className="w-28 h-2"
+            style={{ accentColor: 'rgb(10, 102, 194)' }}
+          />
+        </div>
+      </div>
+      {/* End slider */}
 
       <button
         onClick={handleGenerate}
