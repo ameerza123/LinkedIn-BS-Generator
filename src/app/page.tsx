@@ -45,6 +45,7 @@ export default function Home() {
           backgroundColor: 'rgb(255, 255, 255)',
           color: 'rgb(10, 102, 194)',
           outline: '1px solid rgb(10, 102, 194)',
+          boxShadow: '0 2px 8px rgba(0,0,0,0.07)',
         }}
       />
 
@@ -56,26 +57,36 @@ export default function Home() {
           backgroundColor: 'rgb(10, 102, 194)',
           opacity: loading || !input ? 0.6 : 1,
           cursor: loading || !input ? 'not-allowed' : 'pointer',
+          boxShadow: '0 2px 8px rgba(0,0,0,0.07)',
         }}
       >
-        {loading ? 'Generating...' : 'Generate Post'}
+        {loading ? 'Generating...' : 'Generate post'}
       </button>
 
+      <textarea
+        value={output}
+        readOnly
+        className="w-full h-80 p-2 rounded mb-2"
+        style={{
+          backgroundColor: 'rgb(255, 255, 255)',
+          color: 'black',
+          border: 'none',
+          outline: '1px solid rgb(223, 222, 218)',
+          resize: 'none',
+          overflow: 'auto',
+          boxShadow: '0 2px 8px rgba(0,0,0,0.07)',
+        }}
+      />
       {output && (
-        <>
-          <textarea
-            value={output}
-            readOnly
-            className="w-full h-60 border p-2 rounded mb-2"
-            style={{ backgroundColor: 'rgb(255, 255, 255)', color: 'black' }}
-          />
-          <button
-            onClick={handleCopy}
-            className="bg-green-600 text-white px-4 py-2 rounded"
-          >
-            Copy to Clipboard
-          </button>
-        </>
+        <button
+          onClick={handleCopy}
+          className="bg-green-600 text-white px-4 py-2 rounded"
+          style={{
+            boxShadow: '0 2px 8px rgba(0,0,0,0.07)',
+          }}
+        >
+          Copy to Clipboard
+        </button>
       )}
     </main>
   );
