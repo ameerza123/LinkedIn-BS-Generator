@@ -20,7 +20,7 @@ Constraints:
 - Keep the total output under 1500 characters.
 
 The post should sound like the task was a major personal or professional triumph that reflects leadership, resilience, or career readiness. 
-Make reference to the task as if you yourself completed it.
+Make reference to the task in the post as if you yourself completed it.
 Begin immediately with a punchy sentence.
 Use emojis to highlight some key sentences. 
 Don't explain what you're doing — just write the post as if it were real.
