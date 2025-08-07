@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-const tones = ['satirical', 'corporate cringe', 'earnest'];
+const tones = ['satirical', 'corporate cringe', 'serious'];
 
 export default function Home() {
   const [input, setInput] = useState('');
