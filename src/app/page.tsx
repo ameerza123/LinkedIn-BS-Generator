@@ -7,6 +7,7 @@ export default function Home() {
   const [output, setOutput] = useState('');
   const [loading, setLoading] = useState(false);
   const [length, setLength] = useState(1000); // Slider length defaults to medium
+  const [useEmojis, setUseEmojis] = useState(true); // Emoji toggle
 
   const handleGenerate = async () => {
     setLoading(true);
@@ -14,7 +15,7 @@ export default function Home() {
     const res = await fetch('/api/generate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userInput: input, length }),
+      body: JSON.stringify({ userInput: input, length, useEmojis }),
     });
     const data = await res.json();
     setOutput(data.output);
@@ -58,7 +59,7 @@ export default function Home() {
       />
 
       {/* Slider for post length */}
-      <div className="mb-4 flex flex-col items-start">
+      <div className="mb-4 flex flex-row items-center gap-4">
         <div className="w-28 flex flex-col items-center">
           <label htmlFor="length-slider" className="block mb-1 font-semibold text-gray-700 text-sm text-center w-full">
             Post Length
@@ -80,6 +81,31 @@ export default function Home() {
             className="w-28 h-2"
             style={{ accentColor: 'rgb(10, 102, 194)' }}
           />
+        </div>
+
+        {/* Emoji toggle */}
+        <div className="flex flex-col items-center ml-2">
+          <label htmlFor="emoji-toggle" className="text-xs font-semibold text-gray-700 mb-1">
+            Emojis
+          </label>
+          <button
+            id="emoji-toggle"
+            type="button"
+            aria-pressed={useEmojis}
+            onClick={() => setUseEmojis((v) => !v)}
+            className={`w-10 h-6 rounded-full transition-colors duration-200 flex items-center`}
+            style={{
+              backgroundColor: useEmojis ? 'rgb(10, 102, 194)' : 'rgb(223, 222, 218)',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.07)',
+            }}
+            aria-label={useEmojis ? 'Disable emojis' : 'Enable emojis'}
+          >
+            <span
+              className={`inline-block w-5 h-5 rounded-full bg-white shadow transform transition-transform duration-200 ${useEmojis ? 'translate-x-4' : 'translate-x-1'}`}
+            >
+              {/* Optionally add emoji icons here */}
+            </span>
+          </button>
         </div>
       </div>
 
