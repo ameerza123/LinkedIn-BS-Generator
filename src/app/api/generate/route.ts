@@ -22,7 +22,7 @@ The post should sound like a major personal or professional triumph that reflect
 `;
 
   const result = await genAI.models.generateContent({
-    model: 'gemini-2.5-flash',
+    model: 'gemini-2.5-flash-lite',
     contents: [{ role: 'user', parts: [{ text: prompt }] }],
   });
 
