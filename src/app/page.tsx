@@ -2,11 +2,8 @@
 
 import { useState } from 'react';
 
-const tones = ['satirical', 'corporate cringe', 'serious'];
-
 export default function Home() {
   const [input, setInput] = useState('');
-  const [tone, setTone] = useState('satirical');
   const [output, setOutput] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -16,7 +13,7 @@ export default function Home() {
     const res = await fetch('/api/generate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userInput: input, tone }),
+      body: JSON.stringify({ userInput: input }),
     });
     const data = await res.json();
     setOutput(data.output);
@@ -46,19 +43,6 @@ export default function Home() {
         className="w-full border p-2 rounded mb-4"
         style={{ backgroundColor: 'rgb(255, 255, 255)', color: 'black' }}
       />
-
-      <select
-        value={tone}
-        onChange={(e) => setTone(e.target.value)}
-        className="w-full border p-2 rounded mb-4"
-        style={{ backgroundColor: 'rgb(255, 255, 255)', color: 'black' }}
-      >
-        {tones.map((t) => (
-          <option key={t} value={t}>
-            {t.charAt(0).toUpperCase() + t.slice(1)}
-          </option>
-        ))}
-      </select>
 
       <button
         onClick={handleGenerate}

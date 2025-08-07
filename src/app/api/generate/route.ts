@@ -6,11 +6,11 @@ const genAI = new GoogleGenAI({
 });
 
 export async function POST(req: NextRequest) {
-  const { userInput, tone } = await req.json();
+  const { userInput } = await req.json();
 
   const prompt = `
 You are an aspiring LinkedIn influencer who has just done the following task: "${userInput}".
-Write a LinkedIn post based on what you accomplished in the following tone: ${tone}.
+Write a LinkedIn post based on what you accomplished. The post should seem serious and use corporate jargon.
 
 Constraints:
 - Do NOT include image descriptions or anything inside square brackets.
