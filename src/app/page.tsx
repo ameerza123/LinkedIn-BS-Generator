@@ -41,7 +41,11 @@ export default function Home() {
         onChange={(e) => setInput(e.target.value)}
         placeholder="What do you wanna brag about?"
         className="w-full border p-2 rounded mb-4"
-        style={{ backgroundColor: 'rgb(255, 255, 255)', color: 'black' }}
+        style={{
+          backgroundColor: 'rgb(255, 255, 255)',
+          color: 'rgb(10, 102, 194)',
+          outline: '1px solid rgb(10, 102, 194)',
+        }}
       />
 
       <button
