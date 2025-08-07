@@ -6,7 +6,7 @@ export default function Home() {
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [loading, setLoading] = useState(false);
-  const [length, setLength] = useState(1000); // default to medium
+  const [length, setLength] = useState(1000); // Slider length defaults to medium
 
   const handleGenerate = async () => {
     setLoading(true);
@@ -30,6 +30,7 @@ export default function Home() {
       className="min-h-screen p-6 max-w-2xl mx-auto"
       style={{ backgroundColor: 'rgb(244, 242, 238)' }}
     >
+      {/* Title text */}
       <h1
         className="text-3xl font-bold mb-4 text-center"
         style={{ color: 'rgb(10, 102, 194)' }}
@@ -37,7 +38,12 @@ export default function Home() {
         LinkedIn Parody Post Generator
       </h1>
 
+      {/* User input box */}
+      <label htmlFor="brag-input" className="sr-only">
+        Brag Input
+      </label>
       <input
+        id="brag-input"
         value={input}
         onChange={(e) => setInput(e.target.value)}
         placeholder="What do you wanna brag about?"
@@ -51,12 +57,14 @@ export default function Home() {
         }}
       />
 
+      {/* Slider for post length */}
       <div className="mb-4 flex flex-col items-start">
         <div className="w-28 flex flex-col items-center">
-          <label className="block mb-1 font-semibold text-gray-700 text-sm text-center w-full">
+          <label htmlFor="length-slider" className="block mb-1 font-semibold text-gray-700 text-sm text-center w-full">
             Post Length
           </label>
           <input
+            id="length-slider"
             type="range"
             min={0}
             max={2}
@@ -74,8 +82,8 @@ export default function Home() {
           />
         </div>
       </div>
-      {/* End slider */}
 
+      {/* Generate button */}
       <button
         onClick={handleGenerate}
         disabled={loading || !input}
@@ -86,11 +94,17 @@ export default function Home() {
           cursor: loading || !input ? 'not-allowed' : 'pointer',
           boxShadow: '0 2px 8px rgba(0,0,0,0.07)',
         }}
+        aria-label="Generate LinkedIn Post"
       >
         {loading ? 'Generating BS...' : 'Generate post'}
       </button>
 
+      {/* Output text area */}
+      <label htmlFor="output-box" className="sr-only">
+        Generated LinkedIn Post Output
+      </label>
       <textarea
+        id="output-box"
         value={output}
         readOnly
         className="w-full h-80 p-2 rounded mb-2"
@@ -103,7 +117,9 @@ export default function Home() {
           overflow: 'auto',
           boxShadow: '0 2px 8px rgba(0,0,0,0.07)',
         }}
+        aria-label="Generated LinkedIn Post"
       />
+      {/* Copy to clipboard button */}
       {output && (
         <button
           onClick={handleCopy}
@@ -111,6 +127,7 @@ export default function Home() {
           style={{
             boxShadow: '0 2px 8px rgba(0,0,0,0.07)',
           }}
+          aria-label="Copy output to clipboard"
         >
           Copy to Clipboard
         </button>
