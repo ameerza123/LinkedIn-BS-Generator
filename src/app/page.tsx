@@ -43,8 +43,9 @@ export default function Home() {
         className="w-full border p-2 rounded mb-4"
         style={{
           backgroundColor: 'rgb(255, 255, 255)',
-          color: 'rgb(10, 102, 194)',
-          outline: '1px solid rgb(10, 102, 194)',
+          color: 'black',
+          border: 'none',
+          outline: '1px solid rgb(223, 222, 218)',
           boxShadow: '0 2px 8px rgba(0,0,0,0.07)',
         }}
       />
@@ -60,7 +61,7 @@ export default function Home() {
           boxShadow: '0 2px 8px rgba(0,0,0,0.07)',
         }}
       >
-        {loading ? 'Generating...' : 'Generate post'}
+        {loading ? 'Generating BS...' : 'Generate post'}
       </button>
 
       <textarea
