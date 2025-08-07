@@ -8,6 +8,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [length, setLength] = useState(1000); // Slider length defaults to medium
   const [useEmojis, setUseEmojis] = useState(true); // Emoji toggle
+  const [copied, setCopied] = useState(false); // Track copy state
 
   const handleGenerate = async () => {
     setLoading(true);
@@ -24,6 +25,8 @@ export default function Home() {
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(output);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1200);
   };
 
   return (
@@ -106,7 +109,6 @@ export default function Home() {
             <span
               className={`inline-block w-5 h-5 rounded-full bg-white shadow transform transition-transform duration-200 ${useEmojis ? 'translate-x-4' : 'translate-x-1'}`}
             >
-              {/* Optionally add emoji icons here */}
             </span>
           </button>
         </div>
@@ -152,13 +154,19 @@ export default function Home() {
       {output && (
         <button
           onClick={handleCopy}
-          className="bg-green-600 text-white px-4 py-2 rounded"
+          className="bg-green-600 text-white px-4 py-2 rounded flex items-center gap-2"
           style={{
             boxShadow: '0 2px 8px rgba(0,0,0,0.07)',
+            cursor: 'pointer',
           }}
           aria-label="Copy output to clipboard"
         >
-          Copy to Clipboard
+          {/* Clipboard icon */}
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <rect x="9" y="2" width="6" height="4" rx="1" stroke="currentColor" strokeWidth="2" fill="none"/>
+            <rect x="5" y="6" width="14" height="16" rx="2" stroke="currentColor" strokeWidth="2" fill="none"/>
+          </svg>
+          {copied ? 'Copied!' : 'Copy'}
         </button>
       )}
     </main>
