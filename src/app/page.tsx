@@ -30,7 +30,7 @@ export default function Home() {
       style={{ backgroundColor: 'rgb(244, 242, 238)' }}
     >
       <h1
-        className="text-3xl font-bold mb-4"
+        className="text-3xl font-bold mb-4 text-center"
         style={{ color: 'rgb(10, 102, 194)' }}
       >
         LinkedIn Parody Post Generator
