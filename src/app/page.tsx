@@ -85,7 +85,10 @@ export default function Home() {
 
         {/* Emoji toggle */}
         <div className="flex flex-col items-center ml-2">
-          <label htmlFor="emoji-toggle" className="text-xs font-semibold text-gray-700 mb-1">
+          <label
+            htmlFor="emoji-toggle"
+            className="block mb-1 font-semibold text-gray-700 text-sm text-center w-full"
+          >
             Emojis
           </label>
           <button
