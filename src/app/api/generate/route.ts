@@ -6,7 +6,7 @@ const genAI = new GoogleGenAI({
 });
 
 export async function POST(req: NextRequest) {
-  const { userInput, length, useEmojis } = await req.json();
+  const { userInput, length, useEmojis, field } = await req.json();
 
   let charLimit = 1000;
   if (length === 500) charLimit = 500;
@@ -17,26 +17,36 @@ export async function POST(req: NextRequest) {
     : 'Do NOT use any emojis in the post.';
 
   const prompt = `
-You are an aspiring LinkedIn influencer who has just done the following task: "${userInput}".
-Write a LinkedIn post based on what you accomplished. The post should seem serious and occassionally use corporate jargon.
-The post should sound like the task was a major personal or professional triumph that reflects leadership, resilience, or career readiness. 
-Make reference to the task in the post as if you yourself completed it.
-Try to use the words of the task in the post in a way that makes sense.
-Begin immediately with a punchy sentence.
-${emojiInstruction}
-Avoid one large paragraph, instead try to write paragraphs of a few short sentences.
-Don't explain what you're doing — just write the post as if it were real.
+    You are a rising professional in the ${field} field.
 
-Constraints:
-- Do NOT include image descriptions or anything inside square brackets.
-- Do NOT use markdown (no **bold**, *, etc.)
-- Do NOT mention that you are an AI
-- Do NOT mention that this is an AI generated response
-- Keep the total output under ${charLimit} characters.
-`;
+    You recently completed the following task as part of your journey:
+    ${userInput}
+
+    Write a LinkedIn post in your own voice about this experience, as if YOU personally did it.
+
+    **IMPORTANT: You must clearly describe or reference the task in your own words.** The reader will not know what the task was unless you explain it. It is essential that the task is clearly communicated — even if it is absurd, humorous, or unusual.
+
+    Your goal is to make it sound like a meaningful accomplishment that demonstrates qualities such as leadership, creativity, resilience, or career readiness — in a way that fits your field of work (${field}).
+
+    **Tone & Style Guidelines:**
+    - The post should sound serious and authentic, like something a real professional would post on LinkedIn.
+    - Use corporate jargon and industry buzzwords relevant to ${field}.
+    - Begin with a punchy hook that references the task.
+    - Avoid large paragraphs — use short ones with a few sentences each.
+    - DO NOT quote the task verbatim. Rephrase it in your own words.
+    - End with relevant hashtags.
+    - ${emojiInstruction}
+
+    **Constraints:**
+    - The task MUST be clearly referenced in your own words — do NOT ignore or omit it.
+    - Do NOT use quotation marks or square brackets.
+    - Do NOT use markdown formatting (like asterisks).
+    - Do NOT say you are an AI or imply that this is AI-generated.
+    - Keep the total response under ${charLimit} characters.
+  `;
 
   const result = await genAI.models.generateContent({
-    model: 'gemini-2.5-flash-lite',
+    model: 'gemini-2.5-flash',
     contents: [{ role: 'user', parts: [{ text: prompt }] }],
   });
 

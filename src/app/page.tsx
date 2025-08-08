@@ -2,13 +2,16 @@
 
 import { useState } from 'react';
 
+const fields = ['tech', 'marketing', 'finance', 'hr', 'sales', 'consulting'];
+
 export default function Home() {
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [loading, setLoading] = useState(false);
-  const [length, setLength] = useState(1000); // Slider length defaults to medium
-  const [useEmojis, setUseEmojis] = useState(true); // Emoji toggle
-  const [copied, setCopied] = useState(false); // Track copy state
+  const [length, setLength] = useState(1000);
+  const [useEmojis, setUseEmojis] = useState(true);
+  const [field, setField] = useState('tech');
+  const [copied, setCopied] = useState(false);
 
   const handleGenerate = async () => {
     setLoading(true);
@@ -16,7 +19,7 @@ export default function Home() {
     const res = await fetch('/api/generate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userInput: input, length, useEmojis }),
+      body: JSON.stringify({ userInput: input, length, useEmojis, field }),
     });
     const data = await res.json();
     setOutput(data.output);
@@ -34,7 +37,7 @@ export default function Home() {
       className="min-h-screen p-6 max-w-2xl mx-auto"
       style={{ backgroundColor: 'rgb(244, 242, 238)' }}
     >
-      {/* Logo image */}
+      {/* Logo */}
       <img
         src="bs_logo.png"
         alt="BS Logo"
@@ -42,7 +45,7 @@ export default function Home() {
         style={{ width: 80, height: 80 }}
       />
 
-      {/* Title text */}
+      {/* Title */}
       <h1
         className="text-3xl font-bold mb-4 text-center"
         style={{ color: 'rgb(10, 102, 194)' }}
@@ -50,10 +53,7 @@ export default function Home() {
         LinkedIn Post Generator
       </h1>
 
-      {/* User input box */}
-      <label htmlFor="brag-input" className="sr-only">
-        Brag Input
-      </label>
+      {/* Input */}
       <input
         id="brag-input"
         value={input}
@@ -69,8 +69,9 @@ export default function Home() {
         }}
       />
 
-      {/* Slider for post length */}
+      {/* Controls */}
       <div className="mb-4 flex flex-row items-center gap-4">
+        {/* Length */}
         <div className="w-28 flex flex-col items-center">
           <label htmlFor="length-slider" className="block mb-1 font-semibold text-gray-700 text-sm text-center w-full">
             Post Length
@@ -81,10 +82,7 @@ export default function Home() {
             min={0}
             max={2}
             step={1}
-            value={
-              length === 500 ? 0 :
-              length === 1000 ? 1 : 2
-            }
+            value={length === 500 ? 0 : length === 1000 ? 1 : 2}
             onChange={e => {
               const val = Number(e.target.value);
               setLength(val === 0 ? 500 : val === 1 ? 1000 : 2500);
@@ -94,54 +92,69 @@ export default function Home() {
           />
         </div>
 
-        {/* Emoji toggle */}
+        {/* Emoji Toggle */}
         <div className="flex flex-col items-center ml-2">
-          <label
-            htmlFor="emoji-toggle"
-            className="block mb-1 font-semibold text-gray-700 text-sm text-center w-full"
-          >
+          <label className="block mb-1 font-semibold text-gray-700 text-sm text-center w-full">
             Emojis
           </label>
           <button
-            id="emoji-toggle"
             type="button"
             aria-pressed={useEmojis}
-            onClick={() => setUseEmojis((v) => !v)}
-            className={`w-10 h-6 rounded-full transition-colors duration-200 flex items-center`}
+            onClick={() => setUseEmojis(v => !v)}
+            className="w-10 h-6 rounded-full transition-colors duration-200 flex items-center"
             style={{
               backgroundColor: useEmojis ? 'rgb(10, 102, 194)' : 'rgb(223, 222, 218)',
               boxShadow: '0 2px 8px rgba(0,0,0,0.07)',
             }}
-            aria-label={useEmojis ? 'Disable emojis' : 'Enable emojis'}
           >
             <span
-              className={`inline-block w-5 h-5 rounded-full bg-white shadow transform transition-transform duration-200 ${useEmojis ? 'translate-x-4' : 'translate-x-1'}`}
-            >
-            </span>
+              className={`inline-block w-5 h-5 rounded-full bg-white shadow transform transition-transform duration-200 ${
+                useEmojis ? 'translate-x-4' : 'translate-x-1'
+              }`}
+            />
           </button>
+        </div>
+
+        {/* Field Dropdown */}
+        <div className="flex flex-col items-center ml-2 w-32">
+          <label className="block mb-1 font-semibold text-gray-700 text-sm text-center w-full">
+            Field
+          </label>
+          <select
+            value={field}
+            onChange={(e) => setField(e.target.value)}
+            className="w-full p-2 rounded"
+            style={{
+              backgroundColor: 'rgb(255, 255, 255)',
+              color: 'black',
+              border: '2px solid rgb(10, 102, 194)',
+            }}
+          >
+            {fields.map((f) => (
+              <option key={f} value={f}>
+                {f.charAt(0).toUpperCase() + f.slice(1)}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
 
-      {/* Generate button */}
+      {/* Generate */}
       <button
         onClick={handleGenerate}
         disabled={loading || !input}
-        className="text-white px-4 py-2 rounded mb-4"
+        className="text-white px-4 py-2 rounded mb-4 mx-auto block"
         style={{
           backgroundColor: 'rgb(10, 102, 194)',
           opacity: loading || !input ? 0.6 : 1,
           cursor: loading || !input ? 'not-allowed' : 'pointer',
           boxShadow: '0 2px 8px rgba(0,0,0,0.07)',
         }}
-        aria-label="Generate LinkedIn Post"
       >
         {loading ? 'Generating BS...' : 'Generate post'}
       </button>
 
-      {/* Output text area */}
-      <label htmlFor="output-box" className="sr-only">
-        Generated LinkedIn Post Output
-      </label>
+      {/* Output */}
       <textarea
         id="output-box"
         value={output}
@@ -156,20 +169,15 @@ export default function Home() {
           overflow: 'auto',
           boxShadow: '0 2px 8px rgba(0,0,0,0.07)',
         }}
-        aria-label="Generated LinkedIn Post"
       />
-      {/* Copy to clipboard button */}
+
+      {/* Copy */}
       {output && (
         <button
           onClick={handleCopy}
           className="bg-green-600 text-white px-4 py-2 rounded flex items-center gap-2"
-          style={{
-            boxShadow: '0 2px 8px rgba(0,0,0,0.07)',
-            cursor: 'pointer',
-          }}
-          aria-label="Copy output to clipboard"
+          style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.07)', cursor: 'pointer' }}
         >
-          {/* Clipboard icon */}
           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <rect x="9" y="2" width="6" height="4" rx="1" stroke="currentColor" strokeWidth="2" fill="none"/>
             <rect x="5" y="6" width="14" height="16" rx="2" stroke="currentColor" strokeWidth="2" fill="none"/>
