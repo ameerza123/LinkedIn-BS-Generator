@@ -70,10 +70,14 @@ export default function Home() {
       />
 
       {/* Controls */}
-      <div className="mb-4 flex flex-row items-center gap-4">
-        {/* Length */}
-        <div className="w-28 flex flex-col items-center">
-          <label htmlFor="length-slider" className="block mb-1 font-semibold text-gray-700 text-sm text-center w-full">
+      <div className="mb-4 flex flex-col md:flex-row items-center md:justify-between gap-4 w-full">
+        {/* Post Length */}
+        <div className="flex items-center gap-2 w-full md:w-auto justify-between md:justify-start" style={{ minWidth: 150 }}>
+          <label
+            htmlFor="length-slider"
+            className="font-semibold text-gray-700 text-sm whitespace-nowrap"
+            style={{ minWidth: 80 }}
+          >
             Post Length
           </label>
           <input
@@ -83,29 +87,35 @@ export default function Home() {
             max={2}
             step={1}
             value={length === 500 ? 0 : length === 1000 ? 1 : 2}
-            onChange={e => {
+            onChange={(e) => {
               const val = Number(e.target.value);
               setLength(val === 0 ? 500 : val === 1 ? 1000 : 2500);
             }}
-            className="w-28 h-2"
+            className="h-2 w-full md:w-24"
             style={{ accentColor: 'rgb(10, 102, 194)' }}
           />
         </div>
 
         {/* Emoji Toggle */}
-        <div className="flex flex-col items-center ml-2">
-          <label className="block mb-1 font-semibold text-gray-700 text-sm text-center w-full">
+        <div className="flex items-center gap-2 w-full md:w-auto justify-between md:justify-center">
+          <label
+            htmlFor="emoji-toggle"
+            className="font-semibold text-gray-700 text-sm whitespace-nowrap"
+            style={{ minWidth: 60 }}
+          >
             Emojis
           </label>
           <button
+            id="emoji-toggle"
             type="button"
             aria-pressed={useEmojis}
-            onClick={() => setUseEmojis(v => !v)}
+            onClick={() => setUseEmojis((v) => !v)}
             className="w-10 h-6 rounded-full transition-colors duration-200 flex items-center"
             style={{
               backgroundColor: useEmojis ? 'rgb(10, 102, 194)' : 'rgb(223, 222, 218)',
               boxShadow: '0 2px 8px rgba(0,0,0,0.07)',
             }}
+            aria-label={useEmojis ? 'Disable emojis' : 'Enable emojis'}
           >
             <span
               className={`inline-block w-5 h-5 rounded-full bg-white shadow transform transition-transform duration-200 ${
@@ -116,18 +126,24 @@ export default function Home() {
         </div>
 
         {/* Field Dropdown */}
-        <div className="flex flex-col items-center ml-2 w-32">
-          <label className="block mb-1 font-semibold text-gray-700 text-sm text-center w-full">
+        <div className="flex items-center gap-2 w-full md:w-auto justify-between md:justify-end" style={{ minWidth: 140 }}>
+          <label
+            htmlFor="field-select"
+            className="font-semibold text-gray-700 text-sm whitespace-nowrap"
+            style={{ minWidth: 40 }}
+          >
             Field
           </label>
           <select
+            id="field-select"
             value={field}
             onChange={(e) => setField(e.target.value)}
-            className="w-full p-2 rounded"
+            className="p-2 rounded w-full md:w-auto"
             style={{
               backgroundColor: 'rgb(255, 255, 255)',
               color: 'black',
               border: '2px solid rgb(10, 102, 194)',
+              minWidth: 100,
             }}
           >
             {fields.map((f) => (
@@ -178,9 +194,15 @@ export default function Home() {
           className="bg-green-600 text-white px-4 py-2 rounded flex items-center gap-2"
           style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.07)', cursor: 'pointer' }}
         >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <rect x="9" y="2" width="6" height="4" rx="1" stroke="currentColor" strokeWidth="2" fill="none"/>
-            <rect x="5" y="6" width="14" height="16" rx="2" stroke="currentColor" strokeWidth="2" fill="none"/>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5 inline"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <rect x="9" y="2" width="6" height="4" rx="1" stroke="currentColor" strokeWidth="2" fill="none" />
+            <rect x="5" y="6" width="14" height="16" rx="2" stroke="currentColor" strokeWidth="2" fill="none" />
           </svg>
           {copied ? 'Copied!' : 'Copy'}
         </button>
