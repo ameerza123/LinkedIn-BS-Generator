@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-const fields = ['tech', 'marketing', 'finance', 'hr', 'sales', 'consulting'];
+const fields = ['Tech', 'Marketing', 'Finance', 'HR', 'Sales', 'Consulting'];
 
 export default function Home() {
   const [input, setInput] = useState('');
@@ -148,7 +148,7 @@ export default function Home() {
           >
             {fields.map((f) => (
               <option key={f} value={f}>
-                {f.charAt(0).toUpperCase() + f.slice(1)}
+                {f.charAt(0) + f.slice(1)}
               </option>
             ))}
           </select>
