@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 
-const fields = ['Tech', 'Marketing', 'Finance', 'HR', 'Sales', 'Consulting'];
+const fields = ['Tech', 'Marketing', 'Finance', 'HR', 'Healthcare', 'Sales', 'Consulting'];
 
 export default function Home() {
   const [input, setInput] = useState('');
@@ -13,6 +13,7 @@ export default function Home() {
   const [field, setField] = useState('tech');
   const [copied, setCopied] = useState(false);
 
+  // Response Generation
   const handleGenerate = async () => {
     setLoading(true);
     setOutput('');
@@ -26,13 +27,14 @@ export default function Home() {
     setLoading(false);
   };
 
+  // Copying Response
   const handleCopy = async () => {
     await navigator.clipboard.writeText(output);
     setCopied(true);
     setTimeout(() => setCopied(false), 1200);
   };
 
-    // Loading Animation
+  // Loading Animation
   const loadingStages = ["Generating BS.", "Generating BS..", "Generating BS..."];
   const [loadingText, setLoadingText] = useState(loadingStages[0]);
   
