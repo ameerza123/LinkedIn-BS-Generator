@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const fields = ['Tech', 'Marketing', 'Finance', 'HR', 'Sales', 'Consulting'];
 
@@ -32,12 +32,27 @@ export default function Home() {
     setTimeout(() => setCopied(false), 1200);
   };
 
+    // Loading Animation
+  const loadingStages = ["Generating BS.", "Generating BS..", "Generating BS..."];
+  const [loadingText, setLoadingText] = useState(loadingStages[0]);
+  
+  useEffect(() => {
+    if (loading) {
+      let i = 0;
+      const interval = setInterval(() => {
+        i = (i + 1) % loadingStages.length;
+        setLoadingText(loadingStages[i]);
+      }, 500);
+      return () => clearInterval(interval);
+    }
+  }, [loading]);
+
   return (
     <main
       className="min-h-screen p-6 max-w-2xl mx-auto"
       style={{ backgroundColor: 'rgb(244, 242, 238)' }}
     >
-      {/* Logo */}
+      {/* BS Logo */}
       <img
         src="bs_logo.png"
         alt="BS Logo"
@@ -69,10 +84,14 @@ export default function Home() {
         }}
       />
 
-      {/* Controls */}
+      {/* Response Modifiers */}
       <div className="mb-4 flex flex-col md:flex-row items-center md:justify-between gap-4 w-full">
+        
         {/* Post Length */}
-        <div className="flex items-center gap-2 w-full md:w-auto justify-between md:justify-start" style={{ minWidth: 150 }}>
+        <div
+          className="flex items-center gap-2 w-full md:w-auto justify-between md:justify-start"
+          style={{ minWidth: 150 }}
+        >
           <label
             htmlFor="length-slider"
             className="font-semibold text-gray-700 text-sm whitespace-nowrap"
@@ -112,7 +131,9 @@ export default function Home() {
             onClick={() => setUseEmojis((v) => !v)}
             className="w-10 h-6 rounded-full transition-colors duration-200 flex items-center"
             style={{
-              backgroundColor: useEmojis ? 'rgb(10, 102, 194)' : 'rgb(223, 222, 218)',
+              backgroundColor: useEmojis
+                ? 'rgb(10, 102, 194)'
+                : 'rgb(223, 222, 218)',
               boxShadow: '0 2px 8px rgba(0,0,0,0.07)',
             }}
             aria-label={useEmojis ? 'Disable emojis' : 'Enable emojis'}
@@ -126,7 +147,10 @@ export default function Home() {
         </div>
 
         {/* Field Dropdown */}
-        <div className="flex items-center gap-2 w-full md:w-auto justify-between md:justify-end" style={{ minWidth: 140 }}>
+        <div
+          className="flex items-center gap-2 w-full md:w-auto justify-between md:justify-end"
+          style={{ minWidth: 140 }}
+        >
           <label
             htmlFor="field-select"
             className="font-semibold text-gray-700 text-sm whitespace-nowrap"
@@ -165,10 +189,13 @@ export default function Home() {
           opacity: loading || !input ? 0.6 : 1,
           cursor: loading || !input ? 'not-allowed' : 'pointer',
           boxShadow: '0 2px 8px rgba(0,0,0,0.07)',
+          minWidth: '140px',
+          textAlign: 'center'
         }}
       >
-        {loading ? 'Generating BS...' : 'Generate post'}
+        {loading ? loadingText : 'Generate BS'}
       </button>
+
 
       {/* Output */}
       <textarea
@@ -192,7 +219,10 @@ export default function Home() {
         <button
           onClick={handleCopy}
           className="bg-green-600 text-white px-4 py-2 rounded flex items-center gap-2"
-          style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.07)', cursor: 'pointer' }}
+          style={{
+            boxShadow: '0 2px 8px rgba(0,0,0,0.07)',
+            cursor: 'pointer',
+          }}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -201,8 +231,26 @@ export default function Home() {
             viewBox="0 0 24 24"
             stroke="currentColor"
           >
-            <rect x="9" y="2" width="6" height="4" rx="1" stroke="currentColor" strokeWidth="2" fill="none" />
-            <rect x="5" y="6" width="14" height="16" rx="2" stroke="currentColor" strokeWidth="2" fill="none" />
+            <rect
+              x="9"
+              y="2"
+              width="6"
+              height="4"
+              rx="1"
+              stroke="currentColor"
+              strokeWidth="2"
+              fill="none"
+            />
+            <rect
+              x="5"
+              y="6"
+              width="14"
+              height="16"
+              rx="2"
+              stroke="currentColor"
+              strokeWidth="2"
+              fill="none"
+            />
           </svg>
           {copied ? 'Copied!' : 'Copy'}
         </button>
