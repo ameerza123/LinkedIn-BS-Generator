@@ -1,2 +1,2 @@
-# LinkedIn Parody Post Generator
+# LinkedIn BS Generator
 Self explanatory.
