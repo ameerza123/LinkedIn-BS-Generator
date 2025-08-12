@@ -218,44 +218,47 @@ export default function Home() {
 
       {/* Copy */}
       {output && (
-        <button
-          onClick={handleCopy}
-          className="bg-green-600 text-white px-4 py-2 rounded flex items-center gap-2"
-          style={{
-            boxShadow: '0 2px 8px rgba(0,0,0,0.07)',
-            cursor: 'pointer',
-          }}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5 inline"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
+        <div className="flex justify-end">
+          <button
+            onClick={handleCopy}
+            className="bg-green-600 text-white px-4 py-2 rounded flex items-center gap-2 justify-center"
+            style={{
+              boxShadow: '0 2px 8px rgba(0,0,0,0.07)',
+              cursor: 'pointer',
+              minWidth: '112px',
+            }}
           >
-            <rect
-              x="9"
-              y="2"
-              width="6"
-              height="4"
-              rx="1"
-              stroke="currentColor"
-              strokeWidth="2"
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5 inline"
               fill="none"
-            />
-            <rect
-              x="5"
-              y="6"
-              width="14"
-              height="16"
-              rx="2"
+              viewBox="0 0 24 24"
               stroke="currentColor"
-              strokeWidth="2"
-              fill="none"
-            />
-          </svg>
-          {copied ? 'Copied!' : 'Copy'}
-        </button>
+            >
+              <rect
+                x="9"
+                y="2"
+                width="6"
+                height="4"
+                rx="1"
+                stroke="currentColor"
+                strokeWidth="2"
+                fill="none"
+              />
+              <rect
+                x="5"
+                y="6"
+                width="14"
+                height="16"
+                rx="2"
+                stroke="currentColor"
+                strokeWidth="2"
+                fill="none"
+              />
+            </svg>
+            {copied ? 'Copied!' : 'Copy'}
+          </button>
+        </div>
       )}
     </main>
   );
