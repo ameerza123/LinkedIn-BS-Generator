@@ -50,7 +50,7 @@ export default function Home() {
         className="text-3xl font-bold mb-4 text-center"
         style={{ color: 'rgb(10, 102, 194)' }}
       >
-        LinkedIn Post Generator
+        LinkedIn Brag Statement Generator
       </h1>
 
       {/* Input */}
