@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 
-const fields = ['Tech', 'Marketing', 'Finance', 'HR', 'Healthcare', 'Sales', 'Consulting'];
+const fields = ['Tech', 'Marketing', 'Finance', 'HR', 'Healthcare', 'Sales', 'Consulting', 'Engineering'];
 
 export default function Home() {
   const [input, setInput] = useState('');
